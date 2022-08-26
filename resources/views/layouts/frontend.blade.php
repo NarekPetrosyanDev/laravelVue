@@ -34,8 +34,14 @@
 </head>
 <body>
 <div id="app">
-    @include('frontend.inc.header')
     <router-view></router-view>
+    @include('frontend.inc.header')
+    @if(session()->has('success'))
+        <p class="alert alert-success text-center">{{ session()->get('success') }}</p>
+    @endif
+    @if(session()->has('warning'))
+        <p class="alert alert-danger text-center">{{ session()->get('warning') }}</p>
+    @endif
     @yield('content')
     @include('frontend.inc.footer')
 </div>
