@@ -49,7 +49,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <router-link :to="products" class="nav-link">
+                                    <router-link :to="{name:'products'}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Top Navigation</p>
                                     </router-link>
@@ -69,7 +69,7 @@
 export default {
     data() {
         return {
-            products: 'admin/products'
+            products: '/admin/products'
         }
     }
 }

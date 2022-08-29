@@ -18,7 +18,9 @@ class ProductRepository implements ProductInterface
 
     public function create()
     {
-        return Product::all();
+        $data['categories'] = Category::where('parent_id', '>', 1)->get();
+        $data['brands'] = Brand::all();
+        return response()->json($data);
     }
 
     public function store(Request $request)

@@ -19,8 +19,12 @@
     <link rel="stylesheet" href="{{ asset('backend/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- JQVMap -->
     <link rel="stylesheet" href="{{ asset('backend/plugins/jqvmap/jqvmap.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('backend/plugins/select2/css/select2.min.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('backend/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('backend/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Daterange picker -->
@@ -51,8 +55,8 @@
 
         <section class="content">
             <div class="container-fluid">
-                <router-view></router-view>
                 @yield('admin-content')
+                <router-view></router-view>
             </div>
         </section>
     </div>
@@ -61,6 +65,9 @@
 <script src="{{asset('backend/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('backend/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <script src="{{asset('backend/js/app.js')}}"></script>
+<script src="{{asset('backend/plugins/select2/js/select2.full.min.js')}}"></script>
+
+<script src="{{asset('backend/js/custom.js')}}"></script>
 <script>
     $.widget.bridge('uibutton', $.ui.button)
 </script>
@@ -78,6 +85,7 @@
 <script src="{{asset('backend/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 
 <script src="{{asset('backend/plugins/moment/moment.min.js')}}"></script>
+
 
 <script src="{{asset('backend/plugins/daterangepicker/daterangepicker.js')}}"></script>
 

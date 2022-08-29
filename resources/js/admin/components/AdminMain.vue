@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>4874978498484984</h1>
         <!-- Small boxes (Stat box) -->
         <div class="row">
             <div class="col-lg-3 col-6">

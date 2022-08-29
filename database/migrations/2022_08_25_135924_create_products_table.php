@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->bigInteger('price');
             $table->string('image');
             $table->string('description');
-            $table->boolean('status');
+            $table->boolean('status')->default(1);
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');

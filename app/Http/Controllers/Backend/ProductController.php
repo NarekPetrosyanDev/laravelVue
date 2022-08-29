@@ -26,4 +26,9 @@ class ProductController extends Controller
         return $this->productService->create();
     }
 
+    public function store(Request $request)
+    {
+        return $this->productService->store($request);
+    }
+
 }

@@ -36,7 +36,7 @@ class ProductService
      * @param $request
      * @return mixed|void
      */
-    public function store($request)
+    public function store(Request $request)
     {
         return $this->productRepository->store($request);
     }
