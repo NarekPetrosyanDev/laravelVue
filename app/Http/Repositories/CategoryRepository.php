@@ -3,9 +3,8 @@
 namespace App\Http\Repositories;
 
 use App\Http\Interfaces\CategoryInterface;
-use App\Models\Brand;
+use App\Http\Requests\BrandRequest;
 use App\Models\Category;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -13,70 +12,41 @@ class CategoryRepository implements CategoryInterface
 {
     public function index()
     {
-        return Category::all();
+        return Category::with('parent')->get();
     }
 
     public function create()
     {
-        return Product::all();
+        return Category::with('parent')->get();
     }
 
-    public function store(Request $request)
+    public function store(BrandRequest $request)
     {
-        $image = $request->file('image')->store('products', 'public');
-        if (is_null($request['slug'])) {
-            $request['slug'] = Str::slug($request['name']);
-        }
-        $product = Product::create([
+        $category = Category::create([
             'name' => $request['name'],
-            'slug' => $request['slug'],
-            'category_id' => $request['category_id'],
-            'brand_id' => $request['brand_id'],
-            'price' => $request['price'],
-            'status' => $request['status'],
-            'description' => $request['description'],
-            'image' => $image,
+            'parent_id' => $request['parent_id'],
         ]);
     }
 
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
-        $product = Product::findOrFail($id);
-        $categoryList = Category::all();
-        $brandList = Brand::all();
-        $data['product'] = $product;
+        $category = Category::findOrFail($id)->load('parent');
+        $categoryList = Category::where('id', '!=', $category->id)->with('parent')->get();
+        $data['category'] = $category;
         $data['categoryList'] = $categoryList;
-        $data['brandList'] = $brandList;
         return $data;
     }
 
-    public function update(Request $request, Product $product): Product
+    public function update(BrandRequest $request, Category $category): Category
     {
-        if (is_null($request['slug'])) {
-            $request['slug'] = Str::slug($request['name']);
-        }
-        $product->name = $request['name'];
-        $product->slug = $request['slug'];
-        $product->category_id = $request['category_id'];
-        $product->price = $request['price'];
-        $product->status = $request['status'];
-        $product->description = $request['description'];
-        if ($request->has('image')) {
-            unlink('storage/' . $product->image);
-            $image = $request->file('image')->store('products', 'public');
-            $product->image = $image;
-        }
-        $product->save();
+        $category->name = $request['name'];
+        $category->parent_id = $request['parent_id'];
+        $category->save();
     }
 
     public function destroy($id)
     {
-        $product = Product::find($id);
-        unlink('storage/' . $product->image);
-        $product->delete();
-        foreach ($product->gallery as $image) {
-            $image->delete();
-            unlink('storage/' . $image->gallery_image);
-        }
+        $category = Category::find($id);
+        $category->delete();
     }
 }

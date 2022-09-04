@@ -34,20 +34,18 @@
 </head>
 <body>
 <div id="app">
-    <router-view></router-view>
-    @include('frontend.inc.header')
     @if(session()->has('success'))
         <p class="alert alert-success text-center">{{ session()->get('success') }}</p>
     @endif
     @if(session()->has('warning'))
         <p class="alert alert-danger text-center">{{ session()->get('warning') }}</p>
     @endif
+    <main-app></main-app>
     @yield('content')
-    @include('frontend.inc.footer')
 </div>
 
 <script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('dashboard/js/app.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/slick.min.js') }}"></script>
 <script src="{{ asset('js/nouislider.min.js') }}"></script>

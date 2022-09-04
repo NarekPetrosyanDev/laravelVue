@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class AdminMainController extends Controller
 {
-    public function index()
+    public function authUser()
     {
-        return view('backend.admin-main');
+        $authUser = auth()->user();
+        return response()->json($authUser);
     }
 }

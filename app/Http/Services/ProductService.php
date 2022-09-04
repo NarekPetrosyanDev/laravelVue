@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Http\Repositories\ProductRepository;
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,7 @@ class ProductService
      * @param $request
      * @return mixed|void
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         return $this->productRepository->store($request);
     }
@@ -46,12 +47,17 @@ class ProductService
      * @param int $id
      * @return array
      */
-    public function edit(Request $request, int $id): array
+    public function edit($id)
     {
-        return $this->productRepository->edit($request,$id);
+        return $this->productRepository->edit($id);
     }
 
-    public function update(Request $request, Product $product): Product
+    /**
+     * @param Request $request
+     * @param Product $product
+     * @return Product
+     */
+    public function update(ProductRequest $request, Product $product): Product
     {
         return $this->productRepository->update($request, $product);
     }

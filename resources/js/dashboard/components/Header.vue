@@ -4,8 +4,8 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li v-for="link in links">
-                            <router-link :to="link.href"> {{ link.title }}</router-link>
+                        <li>
+
                         </li>
                     </ul>
                     <ul class="header-links pull-right">
@@ -19,9 +19,9 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="header-logo">
-                                <a href="#" class="logo">
+                                <router-link :to="{name: 'home'}" class="logo">
                                     <img src="/img/logo.png" alt="">
-                                </a>
+                                </router-link>
                             </div>
                         </div>
 
@@ -52,7 +52,7 @@
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <i class="fa fa-shopping-cart"></i>
-                                        <span>Your Cart</span>
+                                        <router-link :to="{name: 'cart'}">Your Cart</router-link>
                                         <div class="qty">3</div>
                                     </a>
                                     <div class="cart-dropdown">
@@ -102,27 +102,27 @@
                 </div>
             </div>
         </header>
+        <nav id="navigation">
+            <div class="container">
+                <div id="responsive-nav">
+                    <ul class="main-nav nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Hot Deals</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">Laptops</a></li>
+                        <li><a href="#">Smartphones</a></li>
+                        <li><a href="#">Cameras</a></li>
+                        <li><a href="#">Accessories</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
 </template>
 
 <script>
 export default {
-
-    data() {
-        return {
-            links: [
-                {
-                    title: 'General',
-                    href: '/'
-                },
-                {
-                    title: 'Products',
-                    href: '/products'
-                },
-            ]
-        }
-    }
-
+    name: 'Header'
 }
 </script>
 

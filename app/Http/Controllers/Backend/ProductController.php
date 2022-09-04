@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Http\Services\ProductService;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -26,9 +28,26 @@ class ProductController extends Controller
         return $this->productService->create();
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         return $this->productService->store($request);
+    }
+
+    public function edit($id)
+    {
+        return $this->productService->edit($id);
+    }
+
+
+    public function update(ProductRequest $request, Product $product)
+    {
+        return $this->productService->update($request, $product);
+    }
+
+
+    public function destroy($id)
+    {
+        return $this->productService->destroy($id);
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Interfaces;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -19,24 +20,24 @@ interface ProductInterface
     public function create();
 
     /**
-     * @param Request $request
+     * @param ProductRequest $request
      * @return mixed
      */
-    public function store(Request $request);
+    public function store(ProductRequest $request);
 
     /**
      * @param Request $request
      * @param $id
      * @return mixed
      */
-    public function edit(Request $request, $id);
+    public function edit($id);
 
     /**
      * @param Request $request
      * @param Product $product
      * @return Product
      */
-    public function update(Request $request, Product $product): Product;
+    public function update(ProductRequest $request, Product $product): Product;
 
     /**
      * @param $id

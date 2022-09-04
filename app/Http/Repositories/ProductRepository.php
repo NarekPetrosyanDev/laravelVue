@@ -3,6 +3,7 @@
 namespace App\Http\Repositories;
 
 use App\Http\Interfaces\ProductInterface;
+use App\Http\Requests\ProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -13,7 +14,7 @@ class ProductRepository implements ProductInterface
 {
     public function index()
     {
-        return Product::all();
+        return Product::with(['category', 'brand'])->get();
     }
 
     public function create()
@@ -23,15 +24,11 @@ class ProductRepository implements ProductInterface
         return response()->json($data);
     }
 
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         $image = $request->file('image')->store('products', 'public');
-        if (is_null($request['slug'])) {
-            $request['slug'] = Str::slug($request['name']);
-        }
         $product = Product::create([
             'name' => $request['name'],
-            'slug' => $request['slug'],
             'category_id' => $request['category_id'],
             'brand_id' => $request['brand_id'],
             'price' => $request['price'],
@@ -41,29 +38,20 @@ class ProductRepository implements ProductInterface
         ]);
     }
 
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
         $product = Product::findOrFail($id);
-        $categoryList = Category::all();
-        $brandList = Brand::all();
-        $data['product'] = $product;
-        $data['categoryList'] = $categoryList;
-        $data['brandList'] = $brandList;
-        return $data;
+        return response()->json($product);
     }
 
-    public function update(Request $request, Product $product): Product
+    public function update(ProductRequest $request, Product $product): Product
     {
-        if (is_null($request['slug'])) {
-            $request['slug'] = Str::slug($request['name']);
-        }
         $product->name = $request['name'];
-        $product->slug = $request['slug'];
         $product->category_id = $request['category_id'];
         $product->price = $request['price'];
         $product->status = $request['status'];
         $product->description = $request['description'];
-        if ($request->has('image')) {
+        if ($request->file('image')) {
             unlink('storage/' . $product->image);
             $image = $request->file('image')->store('products', 'public');
             $product->image = $image;
@@ -76,9 +64,5 @@ class ProductRepository implements ProductInterface
         $product = Product::find($id);
         unlink('storage/' . $product->image);
         $product->delete();
-        foreach ($product->gallery as $image) {
-            $image->delete();
-            unlink('storage/' . $image->gallery_image);
-        }
     }
 }
